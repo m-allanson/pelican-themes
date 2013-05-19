@@ -56,8 +56,8 @@ module.exports = function () {
         // read in sha
         fs.readFile(shaFile, 'utf8', function(err, data) {
           if (err) throw err;
-          console.log('OK: ' + shaFile);
-          console.log(data);
+          console.log('Found sha File: ' + shaFile);
+          console.log('Stored sha is: ', data);
         });
 
         // uses personal api key
@@ -93,7 +93,7 @@ module.exports = function () {
     }
 
     function compareSha(sha) {
-        console.log('Comparing shas', sha, previousSha);
+        console.log('Comparing new sha and previous sha: ', sha, previousSha);
         if (sha !== previousSha) {
             console.log('Shas are different, repos have been updated');
             previousSha = sha;
@@ -214,7 +214,7 @@ module.exports = function () {
     }
 
     function getThemes() {
-        console.log('requested', savedThemes);
+        // console.log('requested', savedThemes);
         return savedThemes;
     }
 
