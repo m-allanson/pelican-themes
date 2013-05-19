@@ -5,7 +5,7 @@ global.ROOT = require('path').dirname(require.main.filename);
 var dataFetcher = require('./app/data-fetcher.js');
 var express = require('express');
 var http = require('http');
-var port = 8081;
+var port = process.env.PORT || 8081;
 
 // gets and stores data
 dataFetcher.init();
