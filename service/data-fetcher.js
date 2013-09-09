@@ -214,8 +214,8 @@ module.exports = function () {
     }
 
     function getThemes() {
-        // console.log('requested', savedThemes);
-        return savedThemes;
+        console.log('requested', savedThemes);
+        return JSON.parse(savedThemes);
     }
 
     return {

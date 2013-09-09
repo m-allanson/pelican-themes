@@ -2,17 +2,19 @@
   "name": "pelican-themes",
   "version": "0.1.0",
   "description": "A website that displays screenshots of the themes available for Pelican",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": "",
   "author": "M Allanson",
   "license": "MIT",
   "dependencies": {
-    "github": "~0.1.8",
-    "underscore": "~1.4.4",
-    "async": "~0.2.8",
-    "express": "~3.2.4"
+    "express": "3.4.0",
+    "ejs": "*",
+    "less-middleware": "*",
+    "github": "~0.1.10",
+    "underscore": "~1.5.2",
+    "async": "~0.2.9"
   }
 }
