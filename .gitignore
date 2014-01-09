@@ -20,3 +20,4 @@ Thumbs.db
 /.vagrant/
 /provisioning/tmp/
 /provisioning/cookbooks/
+/provisioning/GITHUB_API_KEY.dat
