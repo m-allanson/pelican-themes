@@ -8,4 +8,5 @@ set -x # Print commands and their arguments as they are executed.
 # sudo apt-get update
 # sudo apt-get upgrade
 
-node /vagrant/app.js
+sudo npm install -g forever
+forever start /vagrant/app.js
