@@ -12,4 +12,11 @@ logs
 results
 
 npm-debug.log
-node_modules
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+/node_modules/
+/.vagrant/
+/provisioning/tmp/
+/provisioning/cookbooks/

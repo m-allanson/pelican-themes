@@ -1,3 +1,24 @@
+# Requirements
+Vagrant ~1.4
+
+# Setup
+Install vagrant
+
+Install vagrant vbguest plugin 
+    `vagrant plugin install vagrant-vbguest`
+
+install vagrant librarian-chef plugin 
+    `vagrant plugin install vagrant-librarian-chef`
+
+Edit the file `/provisioning/GITHUB_API_KEY.dat` to contain your github api key
+
+Run `vagrant up`
+
+Wait
+
+Browse to http://localhost:3000
+
+# About
 A quick and dirty nodejs website that shows screenshots of Pelican themes.  The screenshots are sourced from https://github.com/getpelican/pelican-themes via the Github api.
 
 The github data is cached in two files, these have had the following git commands applied to them:
