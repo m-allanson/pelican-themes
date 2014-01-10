@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/m-allanson/pelican-themes.png)](https://codeclimate.com/github/m-allanson/pelican-themes)
+
 # Requirements
 Vagrant ~1.4
 
