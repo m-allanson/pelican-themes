@@ -3,22 +3,22 @@
  * Keeps theme data up to date
  */
 
-// var config = require("../config");
-// var restify = require("restify");
-// var EventEmitter = require("events").EventEmitter;
+// var config = require('../config');
+// var restify = require('restify');
+// var EventEmitter = require('events').EventEmitter;
 
 
 var fs = require('fs');
 var _ = require('underscore');
 var async = require('async');
 var EventEmitter = require('events').EventEmitter;
-var GitHubApi = require("github");
+var GitHubApi = require('github');
 
 
-module.exports = function () {
+module.exports = (function () {
 
-    "use strict";
-    
+    'use strict';
+
     var themeList = {};
     var latestSha = '';
     var shaFile = ROOT+'/data/pelican-sha';
@@ -29,12 +29,12 @@ module.exports = function () {
 
     var events = new EventEmitter();
     var github = new GitHubApi({
-        version: "3.0.0",
+        version: '3.0.0',
         timeout: 5000
     });
 
     /**
-     * 
+     *
      */
     function init () {
 
@@ -55,9 +55,9 @@ module.exports = function () {
     function getSha() {
         // read in sha
         fs.readFile(shaFile, 'utf8', function(err, data) {
-          if (err) throw err;
-          console.log('Found sha File: ' + shaFile);
-          console.log('Stored sha is: ', data);
+            if (err) throw err;
+            console.log('Found sha File: ' + shaFile);
+            console.log('Stored sha is: ', data);
         });
 
         // uses personal api key
@@ -71,7 +71,7 @@ module.exports = function () {
             user: 'getpelican',
             repo: 'pelican-themes',
             page: 0,
-            per_page: 1
+            'per_page': 1
         }, function(err, res){
             if (err !== null) {
                 console.log('error retrieving latest sha', err);
@@ -87,9 +87,9 @@ module.exports = function () {
             if(err) {
                 console.log(err);
             } else {
-                console.log("The file was saved with sha ", sha);
+                console.log('The file was saved with sha ', sha);
             }
-        }); 
+        });
     }
 
     function compareSha(sha) {
@@ -98,10 +98,10 @@ module.exports = function () {
             console.log('Shas are different, repos have been updated');
             previousSha = sha;
             saveSha(previousSha);
-            
+
             // trigger an update event
-            events.emit('updateContent', '', filterThemes); 
-            
+            events.emit('updateContent', '', filterThemes);
+
         } else {
             console.log('Shas match, no changes to repo');
         }
@@ -113,7 +113,7 @@ module.exports = function () {
         console.log('fetching content');
         github.repos.getContent({
             user: 'getpelican',
-            repo: 'pelican-themes', 
+            repo: 'pelican-themes',
             path: path
         }, function(err, res){
             if (err !== null) {
@@ -189,7 +189,7 @@ module.exports = function () {
         data = _.map(data, function(item){
             // html_url is actually the link to the page, bodge in conversion
             // to raw url;
-            var url = item.html_url.replace('https://github', 'https://raw.github');
+            var url = item['html_url'].replace('https://github', 'https://raw.github');
             return url.replace('blob/', '');
         });
 
@@ -201,7 +201,7 @@ module.exports = function () {
 
     function updateComplete() {
         console.log('updated all screenshots!', themeList);
-        savedThemes = JSON.stringify(themeList); // savedThemes is returned by the http server 
+        savedThemes = JSON.stringify(themeList); // savedThemes is returned by the http server
         var themeString = JSON.stringify(themeList);
 
         fs.writeFile(jsonFile, themeString, {encoding: 'utf8'}, function(err) {
@@ -210,7 +210,7 @@ module.exports = function () {
             } else {
                 console.log('Saved data to theme file');
             }
-        }); 
+        });
     }
 
     function getThemes() {
@@ -222,4 +222,4 @@ module.exports = function () {
         init: init,
         themes: getThemes
     };
-}();
+}());
