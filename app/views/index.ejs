@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
@@ -15,22 +15,22 @@
         <div class="row-fluid">
             <div class="span8">
                 <h1><%= title %></h1>
-                <p>A list of themes available from the <a href="https://github.com/getpelican/pelican-themes">Pelican Github repository</a></p>
+                <p>A list of <strong><%= themes.length %></strong> themes available from the <a href="https://github.com/getpelican/pelican-themes">Pelican Github repository</a></p>
             </div>
         </div>
         <div class="row-fluid">
             <div id="themes" class="span12">
-                <% for (var theme in themes) { 
-                        var screenshots = themes[theme].screenshots
+
+                <% for (var theme in themes) {
+                        var screenshots = themes[theme].images
                 %>
+
                         <div class="theme">
-                            <h2><%= themes[theme].path %></h2>
+                            <h2><a href="https://github.com/<%= themes[theme].user %>/<%= themes[theme].repo %>/tree/<%= themes[theme].sha %>/<%= themes[theme].path %>" target="_blank"><%= themes[theme].name %></a></h2>
 
                             <% if (screenshots.length > 0) { %>
-
-                                <% for (var i = 0; i < screenshots.length; i++) { %>
-                                    <img src="<%= screenshots[i] %>" alt="<%= themes[theme].path %>">
-                                <% } %>
+                                <!-- TODO: Some themes have multiple screenshots which we could show -->
+                                <img src="<%= screenshots[0] %>" alt="<%= themes[theme].path %>">
 
                             <% } else { %>
                                 <p>There aren't any screenshots for this theme :(</p>

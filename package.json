@@ -4,7 +4,7 @@
   "description": "A website that displays screenshots of the themes available for Pelican",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "repository": "",
   "author": "M Allanson",
@@ -15,6 +15,9 @@
     "less-middleware": "*",
     "github": "~0.1.10",
     "underscore": "~1.5.2",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "redis": "~0.10.1",
+    "co": "~3.0.6",
+    "thunkify": "~2.1.1"
   }
 }

@@ -6,10 +6,10 @@ Vagrant ~1.4
 # Setup
 Install vagrant
 
-Install vagrant vbguest plugin 
+Install vagrant vbguest plugin
     `vagrant plugin install vagrant-vbguest`
 
-install vagrant librarian-chef plugin 
+install vagrant librarian-chef plugin
     `vagrant plugin install vagrant-librarian-chef`
 
 Edit the file `/provisioning/GITHUB_API_KEY.dat` to contain your github api key
@@ -36,12 +36,28 @@ You'll need to set an env var called GITHUB_API_KEY to fetch the theme data from
 
 Contribution is very welcome.  Thanks :)
 
+# Screenshots
+Looks in the root folder for jpg or png files with the words 'screenshot' or 'preview'.  The following file names would be matched.
 
-Useful links :
+theme-screenshot.png
+my-preview.jpg
+screenshot.jpg
+screenshot.png
+preview.png
+
+Doesn't check in a 'screenshots' folder, but probably should.
+Doesn't check in a 'document' folder, but maybe should? See https://github.com/if1live/pelican-sora
+Won't find 'screenshot1.png' or 'preview1.jpg' but probably should.
+Won't find 'index.png' but maybe should?
+
+# Useful links
 https://github.com/getpelican/pelican-themes
 https://api.github.com/repos/getpelican/pelican-themes/contents/bootstrap2
 
 
-Todo:
+# Todo
 periodically check for updates (or use hooks?)
 get submodule themes
+
+# Notes
+`sudo npm install -g redis-commander`, followed by `redis-commander -p 3001` will let you view the redis store in a browser from the host machine.  http://localhost:3001
