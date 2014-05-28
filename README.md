@@ -1,63 +1,50 @@
 [![Code Climate](https://codeclimate.com/github/m-allanson/pelican-themes.png)](https://codeclimate.com/github/m-allanson/pelican-themes)
 
 # Requirements
-Vagrant ~1.4
+Vagrant ~1.6
 
-# Setup
-Install vagrant
-
-Install vagrant vbguest plugin
-    `vagrant plugin install vagrant-vbguest`
-
-install vagrant librarian-chef plugin
-    `vagrant plugin install vagrant-librarian-chef`
-
-Edit the file `/provisioning/GITHUB_API_KEY.dat` to contain your github api key
-
-Run `vagrant up`
-
-Wait
-
-Browse to http://localhost:3000
+# Getting started
+* Install vagrant
+* install vagrant librarian-chef plugin with the following command: `vagrant plugin install vagrant-librarian-chef`
+* Edit the file `/provisioning/GITHUB_API_KEY.dat` to contain your github api key
+* Run `vagrant up`
+* Wait
+* Keep waiting
+* Browse to http://localhost:3000
 
 # About
-A quick and dirty nodejs website that shows screenshots of Pelican themes.  The screenshots are sourced from https://github.com/getpelican/pelican-themes via the Github api.
+A quick and dirty NodeJS website that shows screenshots of Pelican themes.  The screenshots are sourced from <https://github.com/getpelican/pelican-themes> via the Github api.
 
-The github data is cached in two files, these have had the following git commands applied to them:
+The Github data is cached in Redis.
 
-    git update-index --assume-unchanged data/pelican-sha
-    git update-index --assume-unchanged data/themes.json
+You'll need to set an env var called GITHUB_API_KEY to fetch the theme data from github.  This can be done by editing the file `/provisioning/GITHUB_API_KEY.dat` to contain your API key.
 
+The Vagrant VM automatically starts node using forever.  Logs can be found in `/logs/`.
 
-You'll need to set an env var called GITHUB_API_KEY to fetch the theme data from github.  This can be done with something like:
-
-    # Github api key used by pelicanthemes.com
-    export GITHUB_API_KEY='put your api key here'
+To run the node app manually, login to the VM with `vagrant ssh`, from there, run `forever stopall`, then `node --harmony /vagrant/server.js`
 
 Contribution is very welcome.  Thanks :)
 
 # Screenshots
-Looks in the root folder for jpg or png files with the words 'screenshot' or 'preview'.  The following file names would be matched.
+Theme screenshots are found from folders or submodules in the repo at <https://github.com/getpelican/pelican-themes>.  The script repoService.js searches of each theme for `jpg` or `png` files with the words `screenshot` or `preview` in their filename.  The following file names would be matched:
 
-theme-screenshot.png
-my-preview.jpg
-screenshot.jpg
-screenshot.png
-preview.png
+* theme-screenshot.png
+* my-preview.jpg
+* screenshot.jpg
+* screenshot.png
+* preview.png
 
-Doesn't check in a 'screenshots' folder, but probably should.
-Doesn't check in a 'document' folder, but maybe should? See https://github.com/if1live/pelican-sora
-Won't find 'screenshot1.png' or 'preview1.jpg' but probably should.
-Won't find 'index.png' but maybe should?
+It doesn't check in a `screenshots` folder, but probably should.
+It doesn't check in a `document` folder, but maybe should? See https://github.com/if1live/pelican-sora
+It won't find `screenshot1.png` or `preview1.jpg` but probably should.
+It won't find `index.png` but maybe should?
 
 # Useful links
-https://github.com/getpelican/pelican-themes
-https://api.github.com/repos/getpelican/pelican-themes/contents/bootstrap2
-
+The getpelican/pelican-themes repo: <https://github.com/getpelican/pelican-themes>
+An example theme: <https://api.github.com/repos/getpelican/pelican-themes/contents/bootstrap2>
 
 # Todo
 periodically check for updates (or use hooks?)
-get submodule themes
 
 # Notes
-`sudo npm install -g redis-commander`, followed by `redis-commander -p 3001` will let you view the redis store in a browser from the host machine.  http://localhost:3001
+`sudo npm install -g redis-commander`, followed by `redis-commander -p 3001` will let you view the redis store in a browser from the host machine.  <http://localhost:3001>
