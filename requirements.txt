@@ -1,0 +1,8 @@
+# 0.11-dev from tracking master: https://github.com/mitsuhiko/flask/tarball/master
+Flask==0.11-dev
+Jinja2==2.7.3
+MarkupSafe==0.23
+Werkzeug==0.9.6
+itsdangerous==0.24
+wsgiref==0.1.2
+PyGithub==1.25.2

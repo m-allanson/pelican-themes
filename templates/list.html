@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+    <ul class="entries">
+    {% for theme in themes %}
+        <li>
+            <a href="{{ theme.html_url }}"
+                <h2>{{ theme.name }}</h2>
+            </a>
+            <p>{{ theme.text|safe }}</p>
+            {% if theme.image_urls %}
+                {% for img in theme.image_urls %}
+                    <img src="/static/img/ajax-loader.gif" alt="theme.name" data-echo="{{ img }}"/>
+                {% endfor %}
+            {% endif %}
+        </li>
+    {% else %}
+        <li><em>Unbelievable.  No themes here so far.</em>
+    {% endfor %}
+    </ul>
+
+    <script src="/static/js/echo.min.js"></script>
+    <script>
+        echo.init({
+            offset: 250,
+            throttle: 250,
+            unload: false
+        });
+    </script>
+{% endblock %}
