@@ -6,18 +6,11 @@ lib-cov
 *.out
 *.pid
 *.gz
-
-pids
-logs
-results
+*.pyc
 
 npm-debug.log
 *.sublime-workspace
 .DS_Store
 Thumbs.db
 
-/node_modules/
-/.vagrant/
-/provisioning/tmp/
-/provisioning/cookbooks/
-/provisioning/GITHUB_API_KEY.dat
+GITHUB_API_KEY.dat
