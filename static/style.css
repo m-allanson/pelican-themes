@@ -5,8 +5,15 @@ body {
 
 h1 { margin-top: 0; }
 
-a, h1, h2 {
+a, h1, h2, p span {
     color: #377BA8;
+}
+
+h1 span {
+    display: block;
+    font-size: 0.5em;
+    font-weight: normal;
+    color: #ccc;
 }
 
 .page {

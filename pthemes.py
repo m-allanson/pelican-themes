@@ -2,15 +2,9 @@ import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, g, render_template, flash, redirect, url_for
 from api import APIGrabber
+
 app = Flask(__name__)
-
-app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'pthemes.db'),
-    DEBUG=True,
-    SECRET_KEY='mysupersecretsecretwahahhr'
-))
-app.config.from_envvar('PTHEMES_SETTINGS', silent=True)
-
+app.config.from_object(os.environ['PTHEMES_SETTINGS'])
 
 def make_dicts(cursor, row):
     """Row factory that converts tuples to dicts"""
@@ -75,8 +69,9 @@ def query_db(query, args=(), one=False):
 @app.cli.command('populatedb')
 def populatedb_command():
     """Populates the database with info from github."""
+    init_db()
     a = APIGrabber()
-    data = a.fetch()
+    data = a.process()
     theme_query = 'insert into themes (name, sha, user, repo, path, html_url) ' \
                   'values (?, ?, ?, ?, ?, ?)'
     img_query = 'insert into screenshots (theme_id, url) values (?, ?)'
@@ -98,7 +93,7 @@ def populatedb_command():
 
 @app.route('/')
 def show_entries():
-    q = """
+    q_with_images = """
     SELECT
         *,
         GROUP_CONCAT(s.url) AS 'image_urls'
@@ -107,13 +102,33 @@ def show_entries():
     GROUP BY t.name
     ORDER BY name
     """
-    themes = query_db(q)
+    image_themes = query_db(q_with_images)
 
-    for t in themes:
+    q_no_image = """
+    SELECT *
+    FROM themes t
+    WHERE NOT EXISTS (
+      SELECT * FROM screenshots s WHERE s.theme_id = t.id
+    )
+    """
+    no_image_themes = query_db(q_no_image)
+
+    counts = {}
+    counts['image_themes'] = len(image_themes)
+    counts['no_image_themes'] = len(no_image_themes)
+    counts['total'] = counts['image_themes'] + counts['no_image_themes']
+
+    # 80 in total
+    # 66 with images
+
+    for t in image_themes:
         if t['image_urls'] is not None:
             t['image_urls'] = t['image_urls'].split(',')
 
-    return render_template('list.html', themes=themes)
+    return render_template('list.html',
+                           image_themes=image_themes,
+                           no_image_themes=no_image_themes,
+                           counts=counts)
 
 
 @app.route('/add', methods=['GET'])
