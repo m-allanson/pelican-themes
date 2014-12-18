@@ -1,1 +1,1 @@
-web: gunicorn app:pthemes
+web: gunicorn pthemes:app

@@ -55,7 +55,10 @@ class APIGrabber():
         listed in that location."""
         failures = []
 
+        theme_list = theme_list[0:6]
+
         for t in theme_list:
+            print 'tick..'
             contents = []
 
             this_repo = self.get_repo(t['user'], t['repo'])

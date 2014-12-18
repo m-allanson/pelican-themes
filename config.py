@@ -1,5 +1,5 @@
 import os
-from pthemes import app
+
 
 class Config(object):
     DEBUG = False
@@ -15,12 +15,13 @@ class ProductionConfig(Config):
 class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    DATABASE = getattr(os.environ, 'DATABASE_URL', '')
 
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-    DATABASE = os.path.join(app.root_path, 'pthemes.db')
+
 
 class TestingConfig(Config):
     TESTING = True

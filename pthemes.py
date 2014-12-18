@@ -1,10 +1,24 @@
 import os
 from sqlite3 import dbapi2 as sqlite3
+
 from flask import Flask, g, render_template, flash, redirect, url_for
+
 from api import APIGrabber
 
+
+print "ENVIRON:"
+external_settings = getattr(os.environ, 'PTHEMES_SETTINGS', None)
+print external_settings
+
 app = Flask(__name__)
-app.config.from_object(os.environ['PTHEMES_SETTINGS'])
+app.config.update(dict(
+    DATABASE=os.path.join(app.root_path, 'pthemes.db'),
+    DEBUG=True,
+    SECRET_KEY='mysupersecretsecretwahahhr'
+))
+if external_settings:
+    app.config.from_object(external_settings)
+
 
 def make_dicts(cursor, row):
     """Row factory that converts tuples to dicts"""
@@ -66,9 +80,9 @@ def query_db(query, args=(), one=False):
     return ret
 
 
-@app.cli.command('populatedb')
-def populatedb_command():
+def populatedb():
     """Populates the database with info from github."""
+    print "populating db"
     init_db()
     a = APIGrabber()
     data = a.process()
@@ -90,6 +104,10 @@ def populatedb_command():
 
     print('Populated the database.')
 
+
+@app.cli.command('populatedb')
+def populatedb_command():
+    populatedb()
 
 @app.route('/')
 def show_entries():
@@ -118,9 +136,6 @@ def show_entries():
     counts['no_image_themes'] = len(no_image_themes)
     counts['total'] = counts['image_themes'] + counts['no_image_themes']
 
-    # 80 in total
-    # 66 with images
-
     for t in image_themes:
         if t['image_urls'] is not None:
             t['image_urls'] = t['image_urls'].split(',')
@@ -130,22 +145,11 @@ def show_entries():
                            no_image_themes=no_image_themes,
                            counts=counts)
 
-
-@app.route('/add', methods=['GET'])
+@app.route('/refresh_hook', methods=['GET'])
 def add_entry():
-    db = get_db()
-    db.execute('insert into themes (title, text) values (?, ?)',
-               ['Test', 'and test'])
-    db.commit()
-    flash('New entry was successfully posted')
+    populatedb()
     return redirect(url_for('show_entries'))
 
 if __name__ == "__main__":
     app.run()
 
-# count amount of results with images
-#
-# SELECT
-#     count(DISTINCT t.id)
-# FROM themes t
-#     INNER JOIN screenshots s ON s.theme_id = t.id
