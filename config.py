@@ -5,23 +5,18 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = 'this-is-not-a-secret'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    DATABASE = os.environ.get('DATABASE_URL', None)
+    GITHUB_API_KEY = os.environ.get('GITHUB_API_KEY', None)
 
 
 class ProductionConfig(Config):
-    DEBUG = False
+    pass
 
 
 class StagingConfig(Config):
-    DEVELOPMENT = True
     DEBUG = True
-    DATABASE = getattr(os.environ, 'DATABASE_URL', '')
 
 
 class DevelopmentConfig(Config):
-    DEVELOPMENT = True
     DEBUG = True
-
-
-class TestingConfig(Config):
-    TESTING = True

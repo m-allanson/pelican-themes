@@ -1,18 +1,18 @@
-drop table if exists themes;
-drop table if exists screenshots;
+drop table if exists themes CASCADE;
+drop table if exists screenshots CASCADE;
 
 create table themes (
-  id integer primary key autoincrement,
+  id serial primary key,
   name text not null,
   sha text not null,
-  user text not null,
+  user_name text not null,
   repo text not null,
   path text not null,
   html_url text not null
 );
 
 create table screenshots (
-  id integer primary key autoincrement,
+  id serial primary key,
   theme_id integer,
   url text,
   FOREIGN KEY(theme_id) REFERENCES themes(id)

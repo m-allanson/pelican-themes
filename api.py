@@ -4,23 +4,23 @@ import requests
 
 from github import Github, UnknownObjectException
 
-
-CREDENTIALS_FILE = 'GITHUB_API_KEY.dat'
-
 class APIGrabber():
-    def __init__(self):
+    def __init__(self, api_key=None):
         self.gh = ''
         self.token = ''
         self.user = 'getpelican'
         self.repo_name = 'pelican-themes'
         self.main_repo = None
+        self.api_key = api_key
 
     def process(self):
         """Extracts a list of dicts from the Pelican Themes repo.  Each dict
         provides basic info about a Pelican theme."""
-        with open(CREDENTIALS_FILE, 'r') as fd:
-            token = fd.readline().strip()  # Can't hurt to be paranoid
-        self.gh = Github(token)
+
+        if self.api_key:
+            self.gh = Github(self.api_key)
+        else:
+            print "NO API KEY"
 
         theme_list = self.fetch_content()
         theme_list = self.fetch_related_images(theme_list)
@@ -55,7 +55,7 @@ class APIGrabber():
         listed in that location."""
         failures = []
 
-        theme_list = theme_list[0:6]
+        theme_list = theme_list[0:30]
 
         for t in theme_list:
             print 'tick..'
