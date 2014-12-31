@@ -1,0 +1,50 @@
+body {
+    background-color: #eee;
+    font-family: sans-serif;
+}
+
+h1 { margin-top: 0; }
+
+a, h1, h2, p span {
+    color: #377BA8;
+}
+
+h1 span {
+    display: block;
+    font-size: 0.5em;
+    font-weight: normal;
+    color: #ccc;
+}
+
+.page {
+    margin: 0 auto 2em;
+    width: 100%;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0.8em 0;
+}
+
+img {
+    max-width: 48%;
+    text-align: center;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+.flash {
+    background: #CEE5F5;
+    padding: 0.5em;
+    border: 1px solid #AACBE2;
+}
+
+.error {
+    background: #F0D6D6;
+    padding: 0.5em;
+}

@@ -1,1 +1,1 @@
-web: node --harmony server.js
+web: gunicorn pthemes:app
