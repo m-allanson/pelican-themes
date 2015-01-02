@@ -37,7 +37,7 @@ To run via foreman (using Procfile, a la heroku)
 In each case, the site will be available on http://127.0.0.1:5000
 
 Force push to heroku
-`git push heroku feature/python-rewrite:master --force`
+`git push heroku dev:master --force`
 
 # About
 A web page that shows screenshots of Pelican themes.  The screenshots are sourced from <https://github.com/getpelican/pelican-themes> via the Github api.

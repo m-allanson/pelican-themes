@@ -22,10 +22,10 @@ class APIGrabber():
         else:
             print "NO API KEY"
 
-        theme_list = self.fetch_content()
+        sha, theme_list = self.fetch_content()
         theme_list = self.fetch_related_images(theme_list)
 
-        return theme_list
+        return sha, theme_list
 
     def fetch_content(self):
         """
@@ -35,6 +35,8 @@ class APIGrabber():
 
         self.main_repo = self.gh.get_repo('{}/{}'.format(self.user, self.repo_name))
         contents = self.main_repo.get_contents('/').raw_data
+        commits = self.main_repo.get_commits()
+        sha = commits[0].sha
 
         theme_list = []
         # Get theme location, whether directory or submodule
@@ -48,7 +50,7 @@ class APIGrabber():
             if push:
                 theme_list.append(self.info_from_content(theme))
 
-        return theme_list
+        return sha, theme_list
 
     def fetch_related_images(self, theme_list):
         """ Given info about a repo/path on github, get any .jpg or .png files
@@ -56,7 +58,7 @@ class APIGrabber():
         failures = []
 
         for t in theme_list:
-            print 'tick..'
+            print 'Checking theme {}/{}/{}'.format(t['user'], t['repo'],t['path'])
             contents = []
 
             this_repo = self.get_repo(t['user'], t['repo'])
@@ -70,7 +72,7 @@ class APIGrabber():
                     t['image_urls'].append(c['download_url'])
 
             if len(t['image_urls']) == 0:
-                print 'could NO GET IMAGE for {}/{}'.format(t['user'], t['repo'])
+                print 'No image found'
             # else:
                 # print 'found {} images'.format(len(t['image_urls']))
 

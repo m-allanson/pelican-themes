@@ -9,3 +9,4 @@ PyGithub==1.25.2
 psycopg2==2.5.4
 gunicorn==19.1.1
 requests==2.5.0
+pq==1.2

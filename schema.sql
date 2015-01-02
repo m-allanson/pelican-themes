@@ -1,5 +1,10 @@
-drop table if exists themes CASCADE;
 drop table if exists screenshots CASCADE;
+drop table if exists themes CASCADE;
+drop table if exists sha CASCADE;
+
+create table sha (
+  value text not null primary key
+);
 
 create table themes (
   id serial primary key,
