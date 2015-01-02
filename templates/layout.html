@@ -6,11 +6,12 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+{% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+{% endfor %}
     <header>
-        <h1>Pelican Themes <span>(now including submodules!)</span></h1>
-        {% for message in get_flashed_messages() %}
-            <div class="flash">{{ message }}</div>
-        {% endfor %}
+        <h1>Pelican Themes <span class="lowlight shrink-text">(now including submodules!)</span></h1>
+
         <p>A list of themes available from the <a href="https://github.com/getpelican/pelican-themes">Pelican Themes GitHub repository</a>.</p>
     </header>
 
@@ -18,10 +19,12 @@
         {% block body %}{% endblock %}
     </div>
 
+    <p class="lowlight">Last updated from commit {{ sha }}.</p>
+
     <script src="/static/js/echo.min.js"></script>
     <script>
         echo.init({
-            offset: 250,
+            offset: 1500,
             throttle: 250,
             unload: false
         });
