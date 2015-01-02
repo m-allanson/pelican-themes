@@ -1,3 +1,10 @@
+# About
+A web page that shows screenshots of Pelican themes.  The screenshots are sourced from <https://github.com/getpelican/pelican-themes> via the Github api.
+
+The site consists of two parts.  The frontend which lists out the themes, and a separate worker which will update themes in the background.
+
+A live version can be seen at http://www.pelicanthemes.com
+
 # Requirements
 Python 2.7
 Postgres 9.4
@@ -6,8 +13,7 @@ See requirements.txt
 
 # Getting started
 
-The site requires four environment variables to get up and running.  You can
-enable these in a shell like this:
+The site requires four environment variables to get up and running.  They look like this:
 
 ```
 export APP_SETTINGS="config.DevelopmentConfig"
@@ -20,29 +26,33 @@ If using virtualenv or similar, you can add the above lines to your `preactivate
 
 Now you're ready to install the requirements `pip install -r requirements.txt`.
 
-Next you'll need to populate the app with data from github.  This may take a minute or two:
-
-`flask --app=pthemes populatedb`
-
 Now you can run the app:
 
 `flask --app=pthemes --debug run`
 
+And start the worker:
+
+`flask --app=pthemes worker`
+
+The site will now be available on http://127.0.0.1:5000.  You can trigger the worker to update the themes by visiting http://127.0.0.1:5000/refresh_hook
+
+# Other info
+
 To run via gunicorn:
+
 `gunicorn -w 1 -b 127.0.0.1:5000 pthemes:app`
 
-To run via foreman (using Procfile, a la heroku)
+To run the frontend (without worker) via foreman (using Procfile, a la heroku)
+
 `foreman start web`
 
-In each case, the site will be available on http://127.0.0.1:5000
-
 Force push to heroku
+
 `git push heroku dev:master --force`
 
-# About
-A web page that shows screenshots of Pelican themes.  The screenshots are sourced from <https://github.com/getpelican/pelican-themes> via the Github api.
+Manually run the worker on Heroku
 
-Contribution is very welcome.  Thanks :)
+`heroku run 'flask --app=pthemes worker'`
 
 
 # Screenshots
