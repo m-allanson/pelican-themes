@@ -34,7 +34,7 @@ And start the worker:
 
 `flask --app=pthemes worker`
 
-The site will now be available on http://127.0.0.1:5000.  You can trigger the worker to update the themes by visiting http://127.0.0.1:5000/refresh_hook
+The site will now be available on http://127.0.0.1:5000.  You can trigger the worker to update the themes by visiting http://127.0.0.1:5000/git-update
 
 # Other info
 
@@ -49,6 +49,10 @@ To run the frontend (without worker) via foreman (using Procfile, a la heroku)
 Force push to heroku
 
 `git push heroku dev:master --force`
+
+Push to heroku live site
+
+`git push heroku-prod dev:master --force`
 
 Manually run the worker on Heroku
 
