@@ -47,7 +47,7 @@ def show_entries():
                            sha=sha)
 
 
-@app.route('/git-update', methods=['GET'])
+@app.route('/git-update', methods=['GET', 'POST'])
 def refresh_themes():
     """
     Adds a job to the job queue.  The job is to refresh the theme list.  As
