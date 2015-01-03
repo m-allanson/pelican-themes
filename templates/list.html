@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+    <p>Listing <span>{{ counts['total'] }}</span> themes, {{ counts['image_themes'] }} with images.</p>
+    <h2>The themes</h2>
+    <ul class="entries">
+    {% for theme in image_themes %}
+        <li>
+            <a href="{{ theme.html_url }}">
+                <h3>{{ theme.name }}</h3>
+            </a>
+            {% if theme.image_urls %}
+                {% for img in theme.image_urls %}
+                    <img src="/static/img/ajax-loader.gif" alt="theme.name" data-echo="{{ img }}"/>
+                {% endfor %}
+            {% endif %}
+        </li>
+    {% else %}
+        <li><em>Unbelievable.  No themes here so far.</em>
+    {% endfor %}
+    </ul>
+
+    <h2>Themes without screenshots</h2>
+    <p>This site searches for screenshots in the root folder of the theme GitHub repository.  These are the themes that screenshots couldn't be found for.</p>
+    <ul>
+        {% for theme in no_image_themes %}
+            <li>
+                <a href="{{ theme.html_url }}"
+                    <h2>{{ theme.name }}</h2>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

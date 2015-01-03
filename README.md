@@ -1,24 +1,68 @@
-A quick and dirty nodejs website that shows screenshots of Pelican themes.  The screenshots are sourced from https://github.com/getpelican/pelican-themes via the Github api.
+# About
+A web page that shows screenshots of Pelican themes.  The screenshots are sourced from <https://github.com/getpelican/pelican-themes> via the Github api.
 
-The github data is cached in two files, these have had the following git commands applied to them:
+The site consists of two parts.  The frontend which lists out the themes, and a separate worker which will update themes in the background.
 
-    git update-index --assume-unchanged data/pelican-sha
-    git update-index --assume-unchanged data/themes.json
+A live version can be seen at http://www.pelicanthemes.com
 
-
-You'll need to set an env var called GITHUB_API_KEY to fetch the theme data from github.  This can be done with something like:
-
-    # Github api key used by pelicanthemes.com
-    export GITHUB_API_KEY='put your api key here'
-
-Contribution is very welcome.  Thanks :)
+# Requirements
+Python 2.7
+Postgres 9.4
+See requirements.txt
 
 
-Useful links :
-https://github.com/getpelican/pelican-themes
-https://api.github.com/repos/getpelican/pelican-themes/contents/bootstrap2
+# Getting started
+
+The site requires four environment variables to get up and running.  They look like this:
+
+```
+export APP_SETTINGS="config.DevelopmentConfig"
+export DATABASE_URL="postgres://<username>:<password>@<address>/<dbname>"
+export SECRET_KEY="<your secret key here>"
+export GITHUB_API_KEY="<your github api key here>"
+```
+
+If using virtualenv or similar, you can add the above lines to your `preactivate` script.
+
+Now you're ready to install the requirements `pip install -r requirements.txt`.
+
+Now you can run the app:
+
+`flask --app=pthemes --debug run`
+
+And start the worker:
+
+`flask --app=pthemes worker`
+
+The site will now be available on http://127.0.0.1:5000.  You can trigger the worker to update the themes by visiting http://127.0.0.1:5000/git-update
+
+# Other info
+
+To run via gunicorn:
+
+`gunicorn -w 1 -b 127.0.0.1:5000 pthemes:app`
+
+To run the frontend (without worker) via foreman (using Procfile, a la heroku)
+
+`foreman start web`
+
+Force push to heroku
+
+`git push heroku dev:master --force`
+
+Push to heroku live site
+
+`git push heroku-prod dev:master --force`
+
+Manually run the worker on Heroku
+
+`heroku run 'flask --app=pthemes worker'`
 
 
-Todo:
-periodically check for updates (or use hooks?)
-get submodule themes
+# Screenshots
+Theme screenshots are found from folders or submodules in the repo at <https://github.com/getpelican/pelican-themes>.
+
+
+# Useful links
+The getpelican/pelican-themes repo: <https://github.com/getpelican/pelican-themes>
+An example theme: <https://api.github.com/repos/getpelican/pelican-themes/contents/bootstrap2>
