@@ -1,4 +1,8 @@
-_This project is live at pelicanthemes.com but is essentially unmaintained.  I'm happy to provide commit access to anyone who'd like to continue running it._
+**2024 update**: In 2023 I transferred the pelicanthemes.com domain to @justinmayer, who has created a new (and better!) site. It looks like the new site is generated from the `build-theme-previews.py` script in [getpelican/pelican-themes](https://github.com/getpelican/pelican-themes).
+
+**2018 update**: _This project is live at pelicanthemes.com but is essentially unmaintained.  I'm happy to provide commit access to anyone who'd like to continue running it._
+
+------
 
 # About
 A web page that shows screenshots of Pelican themes.  The screenshots are sourced from <https://github.com/getpelican/pelican-themes> via the Github api.
